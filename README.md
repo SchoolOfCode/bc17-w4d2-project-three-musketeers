@@ -15,6 +15,7 @@ npm install nodemon
 ```terminal
 nodemon ./index.js localhost 3000
 ```
+// i added script "start": "nodemon index.js" so we can just type ...npm start ... in terminal to start up the server.
 
 ## Remember to use an API Interogator (e.g. POSTMAN)
 
