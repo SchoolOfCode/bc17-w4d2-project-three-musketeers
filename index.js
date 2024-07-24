@@ -40,13 +40,24 @@ app.get('/activities', (req, res) => {
 //Then the the request should succeed, responding with the correct status code and the activity object that I posted as the response body (response.data).
 
 app.post('/activities', (req, res) => {
-    const newActivity = req.body;
-    newActivity.id = uuidv4();
-    newActivity.timestamp = new Date();
+    const id = uuidv4();
+    const activity_submitted = Date.now();
+    const newActivity = {
+        id,
+        activity_submitted,
+        ...req.body
+    };    
     activities.data.push(newActivity);
     res.status(201).json(newActivity);
-    res.json(activities.data);
 });
+//Given I am a developer who has made an invalid POST request by missing a required request body field like, activity_type or activity_duration,
+//When I inspect the API response,
+//Then the request should fail, responding with the correct status code and a clear error message (response.error).
+//detect if request body is missing a required field
+//required fields are activity_type and activity_duration
+//also need to detect if req body is in json format
+// if missing activity type, respond error and also specify which field is missing. so different error messages for different missing fields
+
     
 
 // app.post('/activities', (req, res) => { 
