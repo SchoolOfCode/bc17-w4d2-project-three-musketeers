@@ -27,8 +27,12 @@ app.get('/', (req, res) => {
 
 //here we need some sort of error handling if the response cant be returned or their get ws crash. try success, catch fail? respond w/ obj
 app.get('/activities', (req, res) => {
-    res.json(activities.data);    
-    })
+    try{
+        res.status(200).json(activities.data);    
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch activities' });
+    }
+});
 
 // Declare app.get with status and message
 
