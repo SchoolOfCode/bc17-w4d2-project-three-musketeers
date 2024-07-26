@@ -1,22 +1,14 @@
 ## How to Install the Application
 
-1. Initialse Node Server and Install Express
+1. Ensure you have Node v20 or above.
+2. Initialse Node Server and Install dependencies
 ```terminal
-npm init -y
-npm install express
+npm install
 ```
-
-2. Install nodemon
-```terminal
-npm install nodemon
-```
-
 3. Launch the Server
 ```terminal
-nodemon ./index.js localhost 3000
+npm start
 ```
-// i added script "start": "nodemon index.js" so we can just type ...npm start ... in terminal to start up the server.
 
-## Remember to use an API Interogator (e.g. POSTMAN)
-
-## If you run into any issues, it's Tom's fault!!!
+## Our application uses Helmet for basic security.
+## Remember to use an API Interogator to  (e.g. POSTMAN)

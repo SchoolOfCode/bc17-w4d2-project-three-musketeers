@@ -38,11 +38,15 @@ app.get('/activities', (req, res) => {
 //Then the the request should succeed, responding with the correct status code and the activity object that I posted as the response body (response.data).
 //detect if request body is missing a required field
 //required fields are activity_type and activity_duration
-//also need to detect if req body is in json format
+//also need to detect if req body is in right format, ie. text and number
 // if missing activity type, respond error and also specify which field is missing. so different error messages for different missing fields
+
+//Define post request endpoint
 app.post('/activities', (req, res) => {
+    //Define variables
     const id = uuidv4();
     const activity_submitted = Date.now();
+
     const newActivity = {
         id,
         activity_submitted,
@@ -63,9 +67,6 @@ app.post('/activities', (req, res) => {
             error: 'Invalid request format. Ensure activity_duration is a number .'
         });
     };
-
-//|| isNaN(activity_duration)   and activity_duration is a number
-
     activities.data.push(newActivity);
     res.status(201).json(newActivity);
 });
@@ -75,24 +76,26 @@ When I make a PUT request to “http://localhost:3000/activities” with a reque
 Then the API should update the activity in the activities.json file that has a matching activity id,
 Then the the request should succeed, responding with the correct status code and the activity object that I posted as the response body (response.data).*/
 
-/*app.put('/activities/:id`, (req, res) => {
+//define put request endpoint
+app.put("/activities/:id", (req, res) => {
+    //Define variables - id number comes from the request
     const id = req.params.id;
+    //We search through our array to find the index position of the activity object, or item with matching id
     const index = activities.data.findIndex ((item) => item.id === id);
- 
+    //If the index position is -1, this means id doesn't exist, return a 404 bad request status explaining.
     if (index === -1) {
        return res.status(404).json({
         error: (`Cannot find activity with ID ${id}.`)
     });
     }  
+    // Define our updated activity object, combined from
    const updatedActivity = {
     ...activities.data[index],
     ...req.body
     };
     activities.data.splice(index, 1,updatedActivity); 
     return res.status(200).json(updatedActivity);
-}); */
-
-//activities.splice(index, 1, { ...activities[index], ...updatedActivityData });
+}); 
 
 
 
@@ -104,17 +107,22 @@ Then the the request should succeed, responding with the correct status code and
 // Then the the API call should fail with the correct response code and a clear error message (response.error).
 //activities.json file contains an array called data with key value pairs - need to target id in array
 //need an if handler for if find = undefined, this means the id searched does not exist
-//more real world - specifying error handling for bad request parameter / endpoint
+//specify error handling for bad request parameter / endpoint
 
+//Define delete request endpoint
 app.delete(`/activities/:id` , (req , res ) => {
+    //Define variables - id is the id number that is requested to be deleted
     const id = req.params.id;
+    //We search through our array to find the index position of the activity object or item with matching id
     const indexPosition = activities.data.findIndex((item) => item.id === id);
-
+    //If the index position is -1, this means id doesn't exist, return a 404 bad request status explaining.
     if (indexPosition === -1) {
         return res.status(404).json({
-            error: (`Cannot find activity with ID ${id}.`)
+            error: (`Cannot find activity with ID ${id}. Delete request failed.`)
         });
     }
+    // If the ID does exist, we use splice function to remove the object from the array and return the deleted object.
+    // here splice starts at our indexPosition and removes 1 item
     const deletedActivity = activities.data.splice(indexPosition, 1,);
     return res.status(200).json(deletedActivity);
     });  
