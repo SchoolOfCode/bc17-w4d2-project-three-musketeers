@@ -70,7 +70,33 @@ app.post('/activities', (req, res) => {
     res.status(201).json(newActivity);
 });
 
-// Task 5 - When I make a DELETE request to “http://localhost:3000/activities/activity_id_here”
+/*Task 5 Given I am a developer who has the Activity API running,
+When I make a PUT request to “http://localhost:3000/activities” with a request body containing a JSON object (updated activity),
+Then the API should update the activity in the activities.json file that has a matching activity id,
+Then the the request should succeed, responding with the correct status code and the activity object that I posted as the response body (response.data).*/
+
+/*app.put('/activities/:id`, (req, res) => {
+    const id = req.params.id;
+    const index = activities.data.findIndex ((item) => item.id === id);
+ 
+    if (index === -1) {
+       return res.status(404).json({
+        error: (`Cannot find activity with ID ${id}.`)
+    });
+    }  
+   const updatedActivity = {
+    ...activities.data[index],
+    ...req.body
+    };
+    activities.data.splice(index, 1,updatedActivity); 
+    return res.status(200).json(updatedActivity);
+}); */
+
+//activities.splice(index, 1, { ...activities[index], ...updatedActivityData });
+
+
+
+// Task 6 - When I make a DELETE request to “http://localhost:3000/activities/activity_id_here”
 // Then the API should delete the activity that has a matching activity id in the activities.json file,
 // Then the request should succeed, responding with the correct status code and the deleted activity object in the response body (response.data).
 // Given I am a developer who has made an invalid DELETE request by specifying an id for a activity that does not exist,
